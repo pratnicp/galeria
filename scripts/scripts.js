@@ -9,7 +9,7 @@ function validate_form ( )
 
     if ( document.contact_form.email.value == "" )
     {
-        document.contact_form.email.style.background="#880000";
+        document.contact_form.email.style.background="#ff0011";
         alert ( "Adres email jest wymagany");
         valid = false;
     }

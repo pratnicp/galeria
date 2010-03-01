@@ -338,6 +338,10 @@ function generate_article($article_id, $conn) {
 function generate_biography($artist_id, $conn) {
     /* @var $article Acticle */
     $artist = Artist::load_one($conn, "id=$artist_id");
+    if($artist->get_photo()!=null){
+    $artist_photo=generate_link('images/'.$artist->get_photo());
+    echo '<div class="biography-photo"> <img src="'.$artist_photo.'" alt="'.$artist->get_name().' '.$artist->get_surname().'"/></div>';
+    }
     display_article($artist->get_name()." ".$artist->get_surname(), $artist->get_bigraphy());
 }
 

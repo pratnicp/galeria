@@ -6,18 +6,18 @@
 
 /* general */
 a {
-    color:#880000;
+    color:#ff0011;
     text-decoration:none;
 }
 
 a:hover {
-    color:#880000;
+    color:#ff0011;
     text-decoration:underline;
 }
 
 /* body */
 body {
-    background:#880000;
+    background:#000000;
     color:#000;
     font:1em Calibri, Arial, Helvetica, "bitstream vera sans", sans-serif;
 }
@@ -47,8 +47,8 @@ body {
 
 /* navigation */
 #navigation {
-    border-top:1px solid #880000;
-    border-bottom:1px solid #880000;
+    border-top:1px solid #ff0011;
+    border-bottom:1px solid #ff0011;
     margin:0 auto;
     width:690px;
     height:30px;
@@ -56,11 +56,10 @@ body {
 }
 #navigation li {
     float:left;
-    width:115px;
     list-style:none;
     text-transform:uppercase;
     font-size: 0.8em;
-
+    margin-left: 37px;
 }
 #navigation a {
     color:#000;
@@ -81,8 +80,8 @@ body {
 /* subnavigation */
 #subnavigation {
     background:#fff;
-    border-bottom: 1px solid #880000;
-    border-top: 1px solid #880000;
+    border-bottom: 1px solid #ff0011;
+    border-top: 1px solid #ff0011;
     margin:0 auto;
     width:690px;
     height:30px;
@@ -126,11 +125,13 @@ body {
 }
 #page_content h2{
     font-weight: normal;
+    font-size: 16px;
 }
 
 #page_content p {
     padding:20px 20px 5px;
 	line-height: 1.5em;
+	text-align: justify;
 }
 #page_content table{
     padding:20px 20px 0;
@@ -163,7 +164,7 @@ body {
 }
 
 #page_content .required {
-    color:#880000;
+    color:#ff0011;
 }
 
 #artist span {
@@ -172,14 +173,14 @@ body {
 
 /* footer */
 #footer {
-    border-top:2px solid #999;
+    border-top:2px solid #ff0011;
     height:15px;
     margin: 30px auto 0;
     padding:10px;
     text-align:center;
     width:690px;
     font-size: 0.8em;
-    color:#880000;
+    color:#ff0011;
 }
 
 #artists td {
@@ -191,17 +192,15 @@ body {
 }
 
 #wrap {
-    background:#FFFFFF url(graphics/midbg_red.png) repeat-y scroll 0 0;
     margin:20px auto;
-    width: 907px;
+    width: 870px;
+    background:#ffffff;
 }
 
 #top{
-    background:#FFFFFF url(graphics/topbg_red.png) repeat scroll 0 0;
     height:30px;
 }
 #bottom{
-    background:#FFFFFF url(graphics/botbg_red.png) repeat scroll 0 0;
     height:30px;
 }
 #header .header_left{
@@ -223,4 +222,8 @@ body {
 	border: 1px solid #ccc;
 	margin: 1px;
 	padding: 2px;
+}
+.biography-photo {
+	float: left;
+	margin: 10px;
 }
