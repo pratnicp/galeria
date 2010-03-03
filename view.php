@@ -439,13 +439,20 @@ function admin_object($object, $conn) {
 }
 
 function list_paintings($paintings, $artist_id, $delete, $create, $report) {
-    echo '<table><tbody>';
+echo '<script src="scripts/jquery.js" type="text/javascript"></script>';
+echo '<script src="scripts/tablednd.js" type="text/javascript"></script>';
+echo '<script type="text/javascript">';
+echo '$(document).ready(function() {';
+echo "$('#table-sortable').tableDnD({";
+echo ' }); });';
+echo '  </script>';
+    echo '<table id="table-sortable"><tbody>';
     if($create) {
         $create_link = generate_link("index.php?action=admin&amp;object=painting&amp;artist_id=$artist_id");
         echo "<tr><td><a href=\"$create_link\"> Utwórz nowy </a></td></tr>";
     }
     foreach ($paintings as $object) {
-        echo '<tr><td>';
+        echo '<tr id="'.$object->get_id().'"><td>';
         $edit_link = generate_link("index.php?action=admin&amp;object=painting&amp;id=".$object->get_id());
         echo "<a href=\"$edit_link\">".$object->get_name()."</a>";
         if ($delete) {
