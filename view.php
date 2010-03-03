@@ -68,14 +68,9 @@ function print_header() {
     ?>
 
 <div id="header">
-    <div class="header_left">
         <a href="http://www.artgaleria.net/index.php">
-            <img src="logo.gif" alt="Artgaleria.net" class="banner" width="240" height="112"/>
+            <img src="logo.jpeg" alt="Artgaleria.net" class="banner" width="750" height="95"/>
         </a>
-    </div>
-    <div class="header_right">Wyszukujemy, licytujemy polskie dzieła za granicą
-    </div>
-    <div class="clear"></div>
 </div>
     <?php
 }

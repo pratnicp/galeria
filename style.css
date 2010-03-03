@@ -17,16 +17,16 @@ a:hover {
 
 /* body */
 body {
-    background:#000000;
+    background:#838383;
     color:#000;
     font:1em Calibri, Arial, Helvetica, "bitstream vera sans", sans-serif;
 }
 
 /* header */
 #header {
-    height:144px;
+    height:95px;
     margin:0 auto;
-    width:690px;
+    width:750px;
 }
 #header h1 {
     color:#888;
@@ -60,6 +60,8 @@ body {
     text-transform:uppercase;
     font-size: 0.8em;
     margin-left: 37px;
+/* 120x 22, 7x 22 */
+/* http://www.daltonlp.com/view/217 */
 }
 #navigation a {
     color:#000;
