@@ -138,6 +138,20 @@ function save_object($object, $conn, $admin=false) {
             close_db($conn);
             redirection($_SERVER['HTTP_REFERER'],'Artysta został zapisany'  ,0);
             break;
+	case 'paintingsOrder':
+            if (!$admin) {
+                break;
+            }
+	    $result = $_REQUEST["table-sortable"];
+	    $order_index=0;
+	    foreach($result as $value) {
+	    	if($value){
+		$order_index++;
+		update_db('Painting', array('paintings_order'=>$order_index), "id=$value", $conn);
+		}
+		}
+	    break;
+
     }
     close_db($conn);
     header("Location: $location", true, 302);
