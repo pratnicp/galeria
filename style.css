@@ -24,26 +24,14 @@ body {
 
 /* header */
 #header {
-    height:94px;
+    height:95px;
     margin:0 auto;
-    width:750px;
+    width:755px;
     background-image: url(logo.jpeg);
 }
-#header h1 {
-    color:#888;
-    font-size:300%;
-    letter-spacing:-3px;
-    text-align:right;
-    padding:5px;
-    margin-bottom:-20px;
-    font-weight: normal;
-}
-#header h2 {
-    color:#CCC;
-    font-size:200%;
-    letter-spacing:-2px;
-    text-align:right;
-    font-weight: normal;
+#logo {
+width:174px;
+height:46px;
 }
 
 /* navigation */
@@ -51,8 +39,8 @@ body {
     margin:0 auto;
     height:22px;
     list-style:none;
-    padding-top:72px;
-    width:749px;
+    padding-top:27px;
+    width:755px;
 }
 #navigation li {
     float:left;
@@ -62,7 +50,7 @@ body {
     height: 22px;
     background-image: url(graphics/navigation.png);
     margin-right:7px;
-    width:119px;
+    width:120px;
     /* 120x 22, 7x 22 */
     /* http://www.daltonlp.com/view/217 */
 }
@@ -214,17 +202,6 @@ body {
 #bottom{
     height:30px;
 }
-#header .header_left{
-    float: left;
-    width: 345px;
-    padding-top:25px;
-}
-#header .header_right{
-    float: right;
-    width: 233px;
-    font-size: 1.3em;
-    padding-top: 25px;
-}
 .clear{
     clear:both;
 }
@@ -236,14 +213,15 @@ body {
 }
 .biography-photo {
     float: left;
-    margin: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 .artist-empty {
     width: 150px;
     padding: 20px;
 }
 .separator {
-    width: 750px;
+    width: 755px;
     height: 5px;
     background-image: url(graphics/belka.jpeg);
     margin:30px auto 0;

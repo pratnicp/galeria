@@ -68,6 +68,7 @@ function print_header($action, $conn) {
     ?>
 
 <div id="header">
+<div id="logo"><a href="http://www.artgaleria.net/index.php"><img src="logo.png" alt="Artgaleria.net"/></a></div>
         <?php
         print_navigation($action, $conn);
         ?>
@@ -96,6 +97,7 @@ function print_navigation($action, $conn) {
 function print_content($action, $conn) {
     print'<div id="page_content">';
     generate_content($action, $conn);
+    print '<div class="clear"></div>';
     print'</div>';
 }
 
