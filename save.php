@@ -44,7 +44,7 @@ function save_object($object, $conn, $admin=false) {
                 $user->update($conn,"email='".$email."'");
             }else {
                 $user->insert($conn);
-		$user = Statistics::load_one($conn, "email='".$email."'");
+                $user = Statistics::load_one($conn, "email='".$email."'");
             }
             $_SESSION['email']=$email;
 
@@ -138,19 +138,20 @@ function save_object($object, $conn, $admin=false) {
             close_db($conn);
             redirection($_SERVER['HTTP_REFERER'],'Artysta został zapisany'  ,0);
             break;
-	case 'paintingsOrder':
+        case 'paintingsOrder':
             if (!$admin) {
                 break;
             }
-	    $result = $_REQUEST["table-sortable"];
-	    $order_index=0;
-	    foreach($result as $value) {
-	    	if($value){
-		$order_index++;
-		update_db('Painting', array('paintings_order'=>$order_index), "id=$value", $conn);
-		}
-		}
-	    break;
+            $result = $_REQUEST["table-sortable"];
+            $order_index=0;
+            foreach($result as $value) {
+                if($value!=null && is_numeric($value)) {
+                    $value= intval($value);
+                    $order_index++;
+                    update_db('Painting', array('paintings_order'=>$order_index), "id=$value", $conn);
+                }
+            }
+            break;
 
     }
     close_db($conn);

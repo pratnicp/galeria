@@ -24,12 +24,12 @@ function open_HTML() {
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <?php
     }
-    
+
     function close_body_HTML() {
         print'</body>';
         print'</html>';
     }
-    
+
     function print_HTML_head($action) {
         echo '<html xmlns="http://www.w3.org/1999/xhtml">';
         ?>
@@ -57,21 +57,20 @@ function open_HTML() {
 function  print_container($action) {
     echo '<div id="wrap">';
     echo '<div id="top"></div>';
-    print_header();
-    print_navigation($action, $_SESSION["sql_conn"]);
+    print_header($action, $_SESSION["sql_conn"]);
     print_content($action, $_SESSION["sql_conn"]);
     print_footer();
     echo '<div id="bottom"></div>';
     echo '</div>';
 }
 
-function print_header() {
+function print_header($action, $conn) {
     ?>
 
 <div id="header">
-    <a href="http://www.artgaleria.net/index.php">
-        <img src="logo.jpeg" alt="Artgaleria.net" class="banner" width="750" height="95"/>
-    </a>
+        <?php
+        print_navigation($action, $conn);
+        ?>
 </div>
     <?php
 }
@@ -81,10 +80,15 @@ function print_navigation($action, $conn) {
     echo '<ul>';
     $menu_items = Menu::load($conn, 'level=0', 'id');
     /* @var $item Menu */
-    foreach ($menu_items as $item) {
+    for ($i=0;     $i<count($menu_items);     $i++  ) {
+        $item=$menu_items[$i];
         $link = generate_href($item->get_action());
         $name = $item->get_description();
+        if($i+1<count($menu_items)){
         echo "<li><a $link>$name</a></li>";
+        }else{
+            echo "<li class=\"last\"><a $link>$name</a></li>";
+        }
     }
     echo '</ul></div>';
 }
@@ -116,10 +120,6 @@ function generate_content($action, $conn) {
             $article_id = get_int_parameter('article');
             generate_article($article_id, $conn);
             break;
-//        case 'save':
-//            $object = get_string_parameter('object');
-//            save_object($object, $conn);
-//            break;
         case 'admin':
             if ($_SESSION['name'] != 'admin') {
                 generate_login();
@@ -156,9 +156,10 @@ function generate_content($action, $conn) {
 }
 
 function print_footer() {
+    echo '<div class="separator"></div>';
     echo '<div id="footer">';
     echo '<p>';
-    echo 'Copyright &copy; <a href="http://www.artgaleria.net">Artgaleria.net</a> 2010 | 00-515 Warszawa, ul. Żurawia 26, tel./fax 22 622 69 90, <a href="mailto:art@artgaleria.net">art@artgaleria.net</a>';
+    echo '00-515 Warszawa, ul. Żurawia 26, tel./fax 22 622 69 90, <a href="mailto:art@artgaleria.net">art@artgaleria.net</a> | Copyright &copy; Artgaleria.net 2010 ';
     echo '</p>';
     echo '</div>';
 }
@@ -423,7 +424,7 @@ function admin_object($object, $conn) {
 function list_paintings($conn, $artist_id, $delete, $create, $report) {
     $table_id = "table-sortable";
     make_table_sortable($table_id);
-    $paintings_gallery = Painting::load($conn, "artist_id=$artist_id and gallery=1");
+    $paintings_gallery = Painting::load($conn, "artist_id=$artist_id and gallery=1", 'paintings_order');
     $paintings_auction = Painting::load($conn, "artist_id=$artist_id and gallery=0");
 
     echo "<table id=\"$table_id\"><tbody>";
@@ -467,17 +468,17 @@ function list_paintings($conn, $artist_id, $delete, $create, $report) {
 }
 
 function make_table_sortable($table_id) { ?>
-    <script src="scripts/jquery.js" type="text/javascript"></script>
-    <script src="scripts/tablednd.js" type="text/javascript"></script>
-    <script type="text/javascript">
+<script src="scripts/jquery.js" type="text/javascript"></script>
+<script src="scripts/tablednd.js" type="text/javascript"></script>
+<script type="text/javascript">
     $(document).ready(function() {
-<?php   echo "$('#$table_id').tableDnD({" ?>
-    onDrop: function(table, row) {
-    	var url="save.php?object=paintingsOrder&"+($.tableDnD.serialize());
-       $.get(url);
-     } }); });
-    </script>
-<?php }
+    <?php   echo "$('#$table_id').tableDnD({" ?>
+            onDrop: function(table, row) {
+                var url="save.php?object=paintingsOrder&"+($.tableDnD.serialize());
+                $.get(url);
+            } }); });
+</script>
+    <?php }
 
 function list_articles($articles, $delete, $create) {
     echo '<table><tbody>';
