@@ -105,7 +105,7 @@ echo '<tr><td>Nazwisko</td><td><input type="text" name="surname" value="'.$this-
 echo '<tr><td>Imię</td><td><input type="text" name="name" value="'.$this->get_value('name',$with_data,false).'"/></td></tr>';
 echo '<tr><td>Lata Życia</td><td><input type="text" name="born" value="'.$this->get_value('born',$with_data,false).'"/></td></tr>';
 echo '<tr><td>Biografia</td><td>';
-echo '<div class="bbcode_area"><script>Init(\'bigraphy\',100,20,\'';
+echo '<div class="bbcode_area"><script>Init(\'bigraphy\',90,40,\'';
 echo javascript_escape($this->get_value('bigraphy',$with_data,false));
 echo '\') </script></div></td></tr>';
 echo '<tr><td>Zdjęcie</td><td><input type="file" name="photo" value="'.$this->get_value('photo',$with_data,false).'"/></td></tr>';
@@ -310,7 +310,7 @@ echo '<tr><td></td><td><input type="hidden" name="artist_id" value="'.$this->get
 echo '<tr><td>Zdjęcie</td><td><input type="file" name="photo" value="'.$this->get_value('photo',$with_data,false).'"/></td></tr>';
 echo '<tr><td>Tytuł</td><td><input type="text" name="name" value="'.$this->get_value('name',$with_data,false).'"/></td></tr>';
 echo '<tr><td>Informacja</td><td>';
-echo '<div class="bbcode_area"><script>Init(\'info\',100,20,\'';
+echo '<div class="bbcode_area"><script>Init(\'info\',90,40,\'';
 echo javascript_escape($this->get_value('info',$with_data,false));
 echo '\') </script></div></td></tr>';
 echo '<tr><td>Data aukcji</td><td><input type="text" name="auction_date" value="'.$this->get_value('auction_date',$with_data,false).'"/></td></tr>';
@@ -737,7 +737,7 @@ echo '<table><tbody>';
 echo '<tr><td></td><td><input type="hidden" name="id" value="'.$this->get_value('id',$with_data,false).'"/></td></tr>';
 echo '<tr><td>Tytuł</td><td><input type="text" name="name" value="'.$this->get_value('name',$with_data,false).'"/></td></tr>';
 echo '<tr><td>Treść</td><td>';
-echo '<div class="bbcode_area"><script>Init(\'content\',100,20,\'';
+echo '<div class="bbcode_area"><script>Init(\'content\',90,40,\'';
 echo javascript_escape($this->get_value('content',$with_data,false));
 echo '\') </script></div></td></tr>';
 echo '<tr><td/><td> <input type="submit"/></td></tr>';

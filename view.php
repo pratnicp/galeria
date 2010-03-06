@@ -48,7 +48,13 @@ function open_HTML() {
     <meta name="mssmarttagspreventparsing" content="true" />
     <meta name="robots" content="index, follow, noarchive" />
     <meta name="revisit-after" content="7 days" />
-    <script type="text/javascript" src="bbeditor/ed.js"></script>
+    <?php
+    if ($action=='admin'){
+echo '   <script type="text/javascript" src="bbeditor/ed.js"></script>';
+echo '<script src="scripts/jquery.js" type="text/javascript"></script>';
+echo '<script src="scripts/tablednd.js" type="text/javascript"></script>';
+echo '<script type="text/javascript" src="scripts/ajaxfileupload.js"></script>';
+    }?>
 </head>
     <?php
     echo '<body>';
@@ -364,7 +370,7 @@ function generate_biography($artist_id, $conn) {
 
 function display_article($title, $content) {
     echo "<h1>$title</h1>";
-    echo "<p>" . decode_BBCode($content) . "</p>";
+    echo "<div id=\"article_content\">" . decode_BBCode($content) . "</div>";
 }
 
 function generate_subnavigation($artist_id, $gallery) {
@@ -497,8 +503,6 @@ function list_paintings($conn, $artist_id, $delete, $create, $report) {
 }
 
 function make_table_sortable($table_id) { ?>
-<script src="scripts/jquery.js" type="text/javascript"></script>
-<script src="scripts/tablednd.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function() {
     <?php   echo "$('#$table_id').tableDnD({" ?>

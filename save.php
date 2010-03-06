@@ -103,6 +103,7 @@ function save_object($object, $conn, $admin=false) {
                 $scale = $w/$width;
                 $h = $size[1]/$scale;
                 cropImage($width, $h, $tmp_path, 'jpg', 'images/'.$foto_filename);
+		@unlink($tmp_path);
                 $painting->set_photo($foto_filename);
             }
             if($new) {

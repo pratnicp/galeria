@@ -73,7 +73,7 @@ body {
     background:#fff;
     border-bottom: 1px solid #ff0011;
     border-top: 1px solid #ff0011;
-    margin:0 auto;
+    margin: 10px auto 0;
     width:690px;
     height:30px;
     list-style:none;
@@ -129,7 +129,7 @@ body {
 #page_content input, textarea {
     background: #e3e3e3;
     margin:2px;
-    width:400px;
+    width:100%;
 }
 
 #page_content .narrow {
@@ -216,4 +216,20 @@ body {
     height: 5px;
     background-image: url(graphics/belka.jpeg);
     margin:30px auto 0;
+}
+
+#loading {
+     display: none;
+}
+#loading img{
+     border: 0;
+}
+
+#fileToUploadArea{
+    display: none;
+    float: left;
+}
+#article_content img {
+float: left;
+margin: 10px;
 }
