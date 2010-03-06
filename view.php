@@ -24,12 +24,12 @@ function open_HTML() {
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <?php
     }
-
+    
     function close_body_HTML() {
         print'</body>';
         print'</html>';
     }
-
+    
     function print_HTML_head($action) {
         echo '<html xmlns="http://www.w3.org/1999/xhtml">';
         ?>
@@ -68,7 +68,7 @@ function print_header($action, $conn) {
     ?>
 
 <div id="header">
-<div id="logo"><a href="http://www.artgaleria.net/index.php"><img src="logo.png" alt="Artgaleria.net"/></a></div>
+    <div id="logo"><a href="http://www.artgaleria.net/index.php"><img src="logo.png" alt="Artgaleria.net"/></a></div>
         <?php
         print_navigation($action, $conn);
         ?>
@@ -79,16 +79,43 @@ function print_header($action, $conn) {
 function print_navigation($action, $conn) {
     echo '<div id="navigation">';
     echo '<ul>';
+    $menu_id = 1;
+    if ($action == 'admin') {
+        $menu_id = 0;
+    } elseif($action == 'article') {
+        $article_id = get_int_parameter('article');
+        switch ($article_id) {
+            case 1:
+                $menu_id = 3;
+                break;
+            case 2:
+                $menu_id = 4;
+                break;
+            case 3:
+                $menu_id = 6;
+                break;
+            case 4:
+                $menu_id = 7;
+                break;
+        }
+    }
     $menu_items = Menu::load($conn, 'level=0', 'id');
     /* @var $item Menu */
-    for ($i=0;     $i<count($menu_items);     $i++  ) {
-        $item=$menu_items[$i];
+    for ($i = 0;     $i < count($menu_items);     $i++) {
+        $item = $menu_items[$i];
         $link = generate_href($item->get_action());
         $name = $item->get_description();
-        if($i+1<count($menu_items)){
-        echo "<li><a $link>$name</a></li>";
-        }else{
-            echo "<li class=\"last\"><a $link>$name</a></li>";
+        $active = "";
+        if ($i + 1 < count($menu_items)) {
+            if ($item->get_id() == $menu_id) {
+                $active = "class=\"active\"";
+            }
+            echo "<li $active><a $link>$name</a></li>";
+        } else {
+            if ($item->get_id() == $menu_id) {
+                $active = "active";
+            }
+            echo "<li class=\"last $active\"><a $link>$name</a></li>";
         }
     }
     echo '</ul></div>';
@@ -97,7 +124,7 @@ function print_navigation($action, $conn) {
 function print_content($action, $conn) {
     print'<div id="page_content">';
     generate_content($action, $conn);
-    print '<div class="clear"></div>';
+    print'<div class="clear"></div>';
     print'</div>';
 }
 
@@ -230,7 +257,7 @@ function generate_paintings($artist_id, $conn) {
     switch ($store) {
         case 'auction':
             $paintings_new = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date>=curdate()", "auction_date");
-            $paintings_old = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date<curdate()", "auction_date");
+            $paintings_old = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date<curdate()", "auction_date desc");
             $paintings = array_merge($paintings_new, $paintings_old);
             $gallery = false;
             break;
@@ -239,7 +266,7 @@ function generate_paintings($artist_id, $conn) {
             $paintings = Painting::load($conn, "artist_id=$artist_id and gallery=1", "paintings_order");
             if (count($paintings) == 0) {
                 $paintings_new = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date>=curdate()", "auction_date");
-                $paintings_old = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date<curdate()", "auction_date");
+                $paintings_old = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date<curdate()", "auction_date desc");
                 $paintings = array_merge($paintings_new, $paintings_old);
                 $gallery = false;
             }
@@ -480,7 +507,8 @@ function make_table_sortable($table_id) { ?>
                 $.get(url);
             } }); });
 </script>
-    <?php }
+    <?php
+}
 
 function list_articles($articles, $delete, $create) {
     echo '<table><tbody>';
