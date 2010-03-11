@@ -237,7 +237,7 @@ function generate_artists($conn) {
         $name_left = $artist_left->get_name() . " " . $artist_left->get_surname();
         $link_left = generate_link("index.php?action=paintings&amp;artist=" . $artist_left->get_id() . "&amp;store=default");
         echo '<td class="artist-empty"></td>';
-        echo "<td><a href=\"$link_left\">$name_left</a></td>";
+        echo "<td class=\"artist-first\"><a href=\"$link_left\">$name_left</a></td>";
         if (($index + $artists_column) < count($artists)) {
             $artist_right = $artists[$index + $artists_column];
             $name_right = $artist_right->get_name() . " " . $artist_right->get_surname();

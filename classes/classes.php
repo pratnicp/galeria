@@ -503,13 +503,13 @@ function create_form($action, $with_data){
 echo "<form action=\"".$action."\" name=\"contact_form\" onsubmit=\"return validate_form ();\" method=\"post\" enctype=\"multipart/form-data\">";
 echo '<table><tbody>';
 echo '<tr><td></td><td><input type="hidden" name="id" value="'.$this->get_value('id',$with_data,false).'"/></td></tr>';
-echo '<tr><td>Imię i nazwisko</td><td><input type="text" name="name" value="'.$this->get_value('name',$with_data,false).'"/></td></tr>';
-echo '<tr><td>Adres korespondencyjny</td><td><input type="text" name="address" value="'.$this->get_value('address',$with_data,false).'"/></td></tr>';
-echo '<tr><td>Telefon komórkowy</td><td><input type="text" name="mobile" value="'.$this->get_value('mobile',$with_data,false).'"/></td></tr>';
-echo '<tr><td>Fax</td><td><input type="text" name="fax" value="'.$this->get_value('fax',$with_data,false).'"/></td></tr>';
-echo '<tr><td class="required">e-mail (wymagany) </td><td><input type="text" name="email" value="'.$this->get_value('email',$with_data,false).'"/></td></tr>';
-echo '<tr><td>Proponowana cena</td><td><input type="text" name="price" value="'.$this->get_value('price',$with_data,false).'"/></td></tr>';
-echo '<tr><td>Zapytanie</td><td><textarea rows="10" name="notice" cols="23">'.$this->get_value('notice',$with_data,false).'</textarea></td></tr>';
+echo '<tr><td class="form-label">Imię i nazwisko</td><td><input type="text" name="name" value="'.$this->get_value('name',$with_data,false).'"/></td></tr>';
+echo '<tr><td class="form-label">Adres korespondencyjny</td><td><input type="text" name="address" value="'.$this->get_value('address',$with_data,false).'"/></td></tr>';
+echo '<tr><td class="form-label">Telefon komórkowy</td><td><input type="text" name="mobile" value="'.$this->get_value('mobile',$with_data,false).'"/></td></tr>';
+echo '<tr><td class="form-label">Fax</td><td><input type="text" name="fax" value="'.$this->get_value('fax',$with_data,false).'"/></td></tr>';
+echo '<tr><td class="form-label required">e-mail (wymagany) </td><td><input type="text" name="email" value="'.$this->get_value('email',$with_data,false).'"/></td></tr>';
+echo '<tr><td class="form-label">Proponowana cena</td><td><input type="text" name="price" value="'.$this->get_value('price',$with_data,false).'"/></td></tr>';
+echo '<tr><td class="form-label">Zapytanie</td><td><textarea rows="10" name="notice" cols="23">'.$this->get_value('notice',$with_data,false).'</textarea></td></tr>';
 echo '<tr><td></td><td><input type="hidden" name="painting_id" value="'.$this->get_value('painting_id',$with_data,false).'"/></td></tr>';
 
 echo '<tr><td/><td> <input type="submit"/></td></tr>';
