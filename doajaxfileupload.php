@@ -56,12 +56,11 @@ if (!empty($_FILES[$fileElementName]['error'])) {
     } else {
         $path = 'foto/' . $_FILES[$fileElementName]['name'];
         if (file_exists($path)) {
-            $error = "Plik o takiej nazwie już istnieje";
-        } else {
-            move_uploaded_file($_FILES[$fileElementName]["tmp_name"],
-                    $path);
-            $msg = $path;
+            $path = 'foto/' . uniqid().$_FILES[$fileElementName]['name'];
         }
+        move_uploaded_file($_FILES[$fileElementName]["tmp_name"],
+                    $path);
+        $msg = $path;
     }
 }		
 @unlink($_FILES[$fileElementName]);
