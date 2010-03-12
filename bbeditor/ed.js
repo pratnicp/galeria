@@ -9,8 +9,14 @@
 
 var textarea;
 var content;
-function ajaxFileUpload()
+function ajaxFileUpload(uploadImage)
 {
+    var ajaxUrl='doajaxfileupload.php?image=0';
+    var ajaxFileToUpload ='fileToUpload';
+    if(uploadImage){
+        ajaxUrl='doajaxfileupload.php?image=1';
+        ajaxFileToUpload = 'imageToUpload';
+    }
     $("#loading")
     .ajaxStart(function(){
         $(this).show();
@@ -19,14 +25,15 @@ function ajaxFileUpload()
     .ajaxComplete(function(){
         $(this).hide();
         $("#fileToUploadArea").hide();
+        $("#imageToUploadArea").hide();
     });
 
     $.ajaxFileUpload
     (
     {
-        url:'doajaxfileupload.php',
+        url: ajaxUrl,
         secureuri:false,
-        fileElementId:'fileToUpload',
+        fileElementId:ajaxFileToUpload,
         dataType: 'text',
         success: function (data, status)
         {
@@ -49,7 +56,14 @@ function ajaxFileUpload()
                 if(submitError){
                     alert(submitError);
                 }else if(message){
-                    doImage(message);
+                    if(uploadImage){
+                        doImage(message);
+                    }else{
+                        var splited = message.split("/");
+                        var description=splited[splited.length-1];
+                        doURL(message, description);
+                    }
+
                 }
             }
         },
@@ -65,6 +79,12 @@ function ajaxFileUpload()
 }
 
 function showUploadForm(){
+    $("#imageToUploadArea").show();
+    $("#fileToUploadArea").hide();
+}
+
+function showFileUploadForm(){
+    $("#imageToUploadArea").hide();
     $("#fileToUploadArea").show();
 }
 
@@ -77,12 +97,18 @@ function Init(obj,width,height, val) {
     document.write("<img class=\"button\" src=\"bbeditor/images/picture.gif\" name=\"btnPicture\" onClick=\"showUploadForm()\">");
     document.write("<img class=\"button\" src=\"bbeditor/images/quote.gif\" name=\"btnQuote\" onClick=\"doAddTags('[quote]','[/quote]')\">");
     document.write("<img class=\"button\" src=\"bbeditor/images/code.gif\" name=\"btnCode\" onClick=\"doAddTags('[code]','[/code]')\">");
+    document.write("<img class=\"button\" src=\"bbeditor/images/file.png\" name=\"btnFile\" onClick=\"showFileUploadForm()\">");
     document.write("<div id=\"loading\">");
     document.write("<img src=\"graphics/loading.gif\" />");
     document.write("</div>");
+    document.write("<br/>");
     document.write("<div id=\"fileToUploadArea\">");
     document.write("<input id=\"fileToUpload\" type=\"file\" name=\"fileToUpload\" class=\"input\"><br/>");
-    document.write("<button class=\"button\" id=\"buttonUpload\" onclick=\"return ajaxFileUpload();\">Upload</button>");
+    document.write("<button class=\"fileButton\" id=\"buttonFileUpload\" onclick=\"return ajaxFileUpload(false);\">Zapisz plik</button>");
+    document.write("</div>");
+    document.write("<div id=\"imageToUploadArea\">");
+    document.write("<input id=\"imageToUpload\" type=\"file\" name=\"imageToUpload\" class=\"input\"><br/>");
+    document.write("<button class=\"imageButton\" id=\"buttonImageUpload\" onclick=\"return ajaxFileUpload(true);\">Zapisz zdjęcie</button>");
     document.write("</div>");
 
     document.write("<textarea id=\""+ obj +"\" name = \"" + obj + "\" cols=\"" + width + "\" rows=\"" + height + "\"></textarea>");
@@ -94,7 +120,7 @@ function Init(obj,width,height, val) {
 function doImage(url)
 {
 
-//    var url = prompt('Enter the Image URL:','http://');
+    //    var url = prompt('Enter the Image URL:','http://');
     var scrollTop = textarea.scrollTop;
     var scrollLeft = textarea.scrollLeft;
 
@@ -122,12 +148,13 @@ function doImage(url)
 
 }
 
-function doURL()
+function doURL(url, description)
 {
-
-    var url = prompt('Enter the URL:','http://');
     if(!url){
-        return;
+        url = prompt('Wprowadź adres:','http://');
+        if(!url){
+            return;
+        }
     }
     var scrollTop = textarea.scrollTop;
     var scrollLeft = textarea.scrollLeft;
@@ -151,14 +178,17 @@ function doURL()
         var len = textarea.value.length;
         var start = textarea.selectionStart;
         var end = textarea.selectionEnd;
+
+        if(description==null){
+            description= textarea.value.substring(start, end);
+        }
+
 		
-        var sel = textarea.value.substring(start, end);
-		
-        if(sel==""){
+        if(description==""){
             var rep = '[url]' + url + '[/url]';
         } else
 {
-            var rep = '[url=' + url + ']' + sel + '[/url]';
+            var rep = '[url=' + url + ']' + description + '[/url]';
         }
         //alert(sel);
 		

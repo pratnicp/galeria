@@ -222,6 +222,7 @@ body {
 
 #loading {
      display: none;
+     float: right;
 }
 #loading img{
      border: 0;
@@ -231,6 +232,12 @@ body {
     display: none;
     float: left;
 }
+
+#imageToUploadArea{
+    display: none;
+    float: left;
+}
+
 #article_content img {
 float: left;
 margin: 10px;

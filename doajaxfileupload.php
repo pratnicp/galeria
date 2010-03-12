@@ -1,7 +1,12 @@
 <?php
+include_once 'lib/parameters.php';
+$is_image=(get_int_parameter('image')==1);
 $error = "";
 $msg = "";
 $fileElementName = 'fileToUpload';
+if($is_image) {
+    $fileElementName = 'imageToUpload';
+}
 if (!empty($_FILES[$fileElementName]['error'])) {
     switch ($_FILES[$fileElementName]['error']) {
 
@@ -44,9 +49,9 @@ if (!empty($_FILES[$fileElementName]['error'])) {
     $error = "Brak pliku";
 } else {
     $max_file_size = 512 * 1024;
-    if (!eregi('image/', $_FILES[$fileElementName]['type'])) {
+    if ($is_image && !eregi('image/', $_FILES[$fileElementName]['type'])) {
         $error = 'Plik nie jest obrazkiem';
-    } elseif(@filesize($_FILES[$fileElementName]['tmp_name']) > (512 * 1024)) {
+    } elseif(@filesize($_FILES[$fileElementName]['tmp_name']) > (2*1024 * 1024)) {
         $error = 'Plik ma rozmiar większy niż 500KB';
     } else {
         $path = 'foto/' . $_FILES[$fileElementName]['name'];
