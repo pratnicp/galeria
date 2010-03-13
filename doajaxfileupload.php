@@ -1,4 +1,10 @@
 <?php
+session_start();
+error_log("doajaxi user name ".$_SESSION['name']."\n", 3 , 'log.txt');
+if($_SESSION['name']!='admin'){
+exit;
+}
+
 include_once 'lib/parameters.php';
 $is_image=(get_int_parameter('image')==1);
 $error = "";
@@ -48,11 +54,11 @@ if (!empty($_FILES[$fileElementName]['error'])) {
 //    $error = 'No file was uploaded..';
     $error = "Brak pliku";
 } else {
-    $max_file_size = 512 * 1024;
+    $max_file_size = 2 * 1024 * 1024;
     if ($is_image && !eregi('image/', $_FILES[$fileElementName]['type'])) {
         $error = 'Plik nie jest obrazkiem';
-    } elseif(@filesize($_FILES[$fileElementName]['tmp_name']) > (2*1024 * 1024)) {
-        $error = 'Plik ma rozmiar większy niż 500KB';
+    } elseif(@filesize($_FILES[$fileElementName]['tmp_name']) > ($max_file_size)) {
+        $error = 'Plik ma rozmiar większy niż '.($max_file_size/1024/1024).'MB';
     } else {
         $path = 'foto/' . $_FILES[$fileElementName]['name'];
         if (file_exists($path)) {
