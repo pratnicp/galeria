@@ -43,7 +43,7 @@ function decode_BBCode($string) {
             '<b>\\1</b>',
             '<i>\\1</i>',
             '<u>\\1</u>',
-            '<img align="left" hspace="10" vspace="10" src="\\1" alt="\\1" />',
+            '<img src="\\1" alt="\\1" />',
             '<a href="\\1">\\2</a>',
             '<code>\\1</code>',
             '<a href="\\1" target="new">\\1</a>',
