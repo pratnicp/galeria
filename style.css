@@ -19,7 +19,7 @@ a:hover {
 body {
     background:#838383;
     color:#000;
-    font:1em Calibri, Arial, Helvetica, "bitstream vera sans", sans-serif;
+    font:1em "century gothic", Calibri, Arial, Helvetica, "bitstream vera sans", sans-serif;
 }
 
 /* header */
@@ -115,7 +115,7 @@ body {
     font-size: 16px;
 }
 
-#page_content p {
+#page_content div {
     padding:20px 20px 5px;
     line-height: 1.5em;
     text-align: justify;

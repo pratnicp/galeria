@@ -98,6 +98,7 @@ function Init(obj,width,height, val) {
     document.write("<img class=\"button\" src=\"bbeditor/images/quote.gif\" name=\"btnQuote\" onClick=\"doAddTags('[quote]','[/quote]')\">");
     document.write("<img class=\"button\" src=\"bbeditor/images/code.gif\" name=\"btnCode\" onClick=\"doAddTags('[code]','[/code]')\">");
     document.write("<img class=\"button\" src=\"bbeditor/images/file.png\" name=\"btnFile\" onClick=\"showFileUploadForm()\">");
+    document.write("<img class=\"button\" src=\"bbeditor/images/enter.png\" name=\"btnEnter\" onClick=\"doAddTags('[br]','')\">");
     document.write("<div id=\"loading\">");
     document.write("<img src=\"graphics/loading.gif\" />");
     document.write("</div>");

@@ -1,11 +1,12 @@
 <?php
 session_start();
 error_log("doajaxi user name ".$_SESSION['name']."\n", 3 , 'log.txt');
-if($_SESSION['name']!='admin'){
-exit;
+if($_SESSION['name']!='admin') {
+    exit;
 }
 
 include_once 'lib/parameters.php';
+include_once 'lib/common.php';
 $is_image=(get_int_parameter('image')==1);
 $error = "";
 $msg = "";
@@ -64,11 +65,67 @@ if (!empty($_FILES[$fileElementName]['error'])) {
         if (file_exists($path)) {
             $path = 'foto/' . uniqid().$_FILES[$fileElementName]['name'];
         }
-        move_uploaded_file($_FILES[$fileElementName]["tmp_name"],
+        if($is_image) {
+            $new_size = calculate_image_size(640, $_FILES[$fileElementName]['tmp_name']);
+            error_log("do_ajax() size: $new_size[0] $new_size[1]\n", 3 , 'log.txt');
+            $image_type=detect_image_type($_FILES[$fileElementName]['name']);
+            error_log("do_ajax() type: $image_type \n", 3 , 'log.txt');
+            if($image_type!='jpg'){
+                $path=$path.'.jpg';
+            }
+            cropImage($new_size[0],$new_size[1], $_FILES[$fileElementName]['tmp_name'], $image_type, $path);
+
+        }else {
+            move_uploaded_file($_FILES[$fileElementName]["tmp_name"],
                     $path);
+        }
         $msg = $path;
     }
 }		
 @unlink($_FILES[$fileElementName]);
 echo	$error . "#" . $msg . "}";
+
+
+function calculate_image_size($max_size, $image) {
+    $size = getimagesize($image);
+    $w = $size[0];
+    $h = $size[1];
+    if(max($w,$h)<=$max_size) {
+        return $size;
+    }
+    if($h>$w) {
+        $ratio = $h/$max_size;
+        return array($w/$ratio , $max_size );
+
+    }else {
+        $ratio = $w/$max_size;
+        return array($max_size, $h/$ratio );
+    }
+    return $size;
+}
+
+function detect_image_type($filename) {
+    $filename = basename($filename);
+
+    // break file into parts seperated by .
+    $filename = explode('.', $filename);
+
+    // take the last part of the file to get the file extension
+    $extension = $filename[count($filename)-1];
+    error_log("do_ajax() detect: $extension \n", 3 , 'log.txt');
+    $extension = lower_pl($extension);
+
+    switch ($extension) {
+        case 'jpg':
+        case 'jpeg':
+            return 'jpg';
+        default:
+            return $extension;
+    }
+
+}
+
+function lower_pl($str) {
+    return strtr($str, "ĄĆĘŁŃÓŚŹŻABCDEFGHIJKLMNOPRSTUWYZQXV", "ąćęłńóśźżabcdefghijklmnoprstuwyzqxv");
+}
 ?>
