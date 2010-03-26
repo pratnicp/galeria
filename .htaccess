@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.+)\.pdf$  /pdf.php?file=$1 [L,NC,QSA]
