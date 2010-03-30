@@ -1,6 +1,5 @@
 <?php
 session_start();
-error_log("doajaxi user name ".$_SESSION['name']."\n", 3 , 'log.txt');
 if($_SESSION['name']!='admin') {
     exit;
 }
@@ -67,9 +66,7 @@ if (!empty($_FILES[$fileElementName]['error'])) {
         }
         if($is_image) {
             $new_size = calculate_image_size(640, $_FILES[$fileElementName]['tmp_name']);
-            error_log("do_ajax() size: $new_size[0] $new_size[1]\n", 3 , 'log.txt');
             $image_type=detect_image_type($_FILES[$fileElementName]['name']);
-            error_log("do_ajax() type: $image_type \n", 3 , 'log.txt');
             if($image_type!='jpg'){
                 $path=$path.'.jpg';
             }
@@ -112,7 +109,6 @@ function detect_image_type($filename) {
 
     // take the last part of the file to get the file extension
     $extension = $filename[count($filename)-1];
-    error_log("do_ajax() detect: $extension \n", 3 , 'log.txt');
     $extension = lower_pl($extension);
 
     switch ($extension) {
