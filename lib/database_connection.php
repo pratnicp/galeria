@@ -61,7 +61,7 @@ function update_db($table, $fields_array, $condition, $conn ){
 }
 function load_db_one($table, $fields, $condition, $connection){
 	$sql = "select $fields from $table where $condition";
-	error_log("load_db_one(): $sql\n", 3 , 'log.txt');
+//	error_log("load_db_one(): $sql\n", 3 , 'log.txt');
 	$result = mysql_query($sql, $connection);
 	$row = mysql_fetch_array($result);
 	mysql_free_result($result);
@@ -82,7 +82,7 @@ function load_db_columns($table, $fields, $aliases, $condition, $connection){
 
 function load_db_rows($table, $fields, $connection, $condition = "1", $order="1"){
 	$sql = "select $fields from $table where $condition ORDER BY $order";
-	error_log("load_db_rows(): $sql\n", 3 , 'log.txt');
+//	error_log("load_db_rows(): $sql\n", 3 , 'log.txt');
 	$rows = array();
 	$result = mysql_query($sql, $connection);
 	while ($row = mysql_fetch_assoc($result)){
