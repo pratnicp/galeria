@@ -35,8 +35,7 @@ function save_object($object, $conn, $admin=false) {
             $artist = Artist::load_one($conn, "id=".$painting->get_artist_id());
             $message = $artist->get_name()." ".$artist->get_surname()." - ".$painting->get_name()."\r\n".$user->to_string();
             include('lib/config.php');
-            mail($admin_email, "notification from artgaleria.net", $message,
-                    "From: $daemon_email\r\n");
+	    UTF8_mail("Artgaleria.net <$daemon_email>", "Art <$admin_email>" , "notification from artgaleria.net", $message );
 
 
             $peristent = Statistics::load_one($conn, "email='".$email."'");

@@ -130,6 +130,45 @@ function notify_admin($message) {
             "From: $daemon_email\r\n");
 }
 
+
+function UTF8_mail($from,$to,$subject,$message,$cc="",$bcc=""){
+
+	$from = explode("<",$from );
+	$headers ="From: =?UTF-8?B?"
+		.base64_encode($from[0])."?= <"
+		. $from[1] . "\r\n";
+
+	$to = explode("<",$to );
+	$to = "=?UTF-8?B?".base64_encode($to[0])
+		."?= <". $to[1] ;
+
+	$subject="=?UTF-8?B?".base64_encode($subject)."?=";
+
+	if($cc!=""){
+		$cc = explode("<",$cc );
+		$headers .= "Cc: =?UTF-8?B?"
+			.base64_encode($cc[0])."?= <"
+			. $cc[1] . "\r\n";
+	}
+
+	if($bcc!=""){
+		$bcc = explode("<",$bcc );
+		$headers .= "Bcc: =?UTF-8?B?"
+			.base64_encode($bcc[0])."?= <"
+			. $bcc[1] . "\r\n";
+	}
+
+	$headers .=
+		"Content-Type: text/plain; "
+		. "charset=UTF-8; format=flowed\n"
+		. "MIME-Version: 1.0\n"
+		. "Content-Transfer-Encoding: 8bit\n"
+		. "X-Mailer: PHP\n";
+
+	return mail($to, $subject, $message, $headers);
+
+}
+
 function replace_emoticons_with_images($string) {
 
     $patterns[0]="/\r\n/";
