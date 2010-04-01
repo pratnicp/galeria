@@ -197,6 +197,14 @@ function print_footer() {
     echo '00-515 Warszawa, ul. Żurawia 26, tel./fax 22 622 69 90, <a href="mailto:art@artgaleria.net">art@artgaleria.net</a> | Copyright &copy; Artgaleria.net 2010 ';
     echo '</p>';
     echo '</div>';
+?>
+<!-- (C) 2004 stat.pl - ver 1.0 / 11 -->
+<script type="text/javascript">
+<!--
+document.writeln('<'+'scr'+'ipt type="text/javascript" src="http://home.hit.stat.pl/_'+(new Date()).getTime()+'/script.js?id=ciU7K88tHIiujYfuvCk4lrPo7zXKfBtOaeyYuMDxHSj.L7"></'+'scr'+'ipt>');
+//-->
+</script>
+<?
 }
 
 function generate_login() {
