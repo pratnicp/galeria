@@ -128,7 +128,7 @@ return "";
 return $this->data["$attribute"]; 
  }
 function load_from_form(){
-$form_data['id']=post_int_parameter('id');$form_data['surname']=post_string_parameter('surname', PARAM_WHATEVER);$form_data['name']=post_string_parameter('name', PARAM_WHATEVER);$form_data['born']=post_string_parameter('born', PARAM_WHATEVER);$form_data['bigraphy']=post_string_parameter_strip('bigraphy', PARAM_WHATEVER);$file_types = array('image/jpeg', 'image/pjpeg', 'application/pdf', 'image/pdf'); 
+$form_data['id']=post_int_parameter('id');$form_data['surname']=post_string_parameter('surname', PARAM_WHATEVER);$form_data['name']=post_string_parameter('name', PARAM_WHATEVER);$form_data['born']=post_string_parameter('born', PARAM_WHATEVER);$form_data['bigraphy']=post_string_parameter_strip('bigraphy', PARAM_WHATEVER);$file_types = array('image/jpeg', 'image/pjpeg'); 
  $form_data['photo'] = check_file_restrictions('photo', $file_types, 3*1024*1024);$checked= post_string_parameter('active', 'on'); 
  $form_data['active']=($checked)?1:0;
 return new Artist($form_data); 
