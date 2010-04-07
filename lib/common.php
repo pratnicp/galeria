@@ -296,12 +296,12 @@ function check_file_restrictions($uploaded_file_field, $types, $max_size) {
         redirection($_SERVER['HTTP_REFERER'], "Rozmiar pliku większy niż $max_size bajtów" ,1 );
     }
     if (!in_array($uploaded_file["type"], $types )) {
-        print_r( $uploaded_file);
+/*        print_r( $uploaded_file);
         echo "Upload: " . $uploaded_file["name"] . "<br />";
         echo "Type: " . $uploaded_file["type"] . "<br />";
         echo "Size: " . ($uploaded_file["size"] / 1024) . " Kb<br />";
         echo "Stored in: " . $uploaded_file["tmp_name"];
-        redirection($_SERVER['HTTP_REFERER'], "To ".$uploaded_file['type']." Niedozwolony typ pliku" ,1 );
+*/        redirection($_SERVER['HTTP_REFERER'], "<strong>".$uploaded_file['type']."</strong> Niedozwolony typ pliku" ,1 );
     }
     if ($uploaded_file["error"] > 0) {
         redirection($_SERVER['HTTP_REFERER'], $uploaded_file["error"] ,1 );

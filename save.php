@@ -120,7 +120,6 @@ function save_object($object, $conn, $admin=false) {
             if (!$admin) {
                 break;
             }
-            echo get_string_parameter('active', 'on');
             $artist=Artist::load_from_form();
             $new = (($artist->get_id()==NULL) || ($artist_pers = Artist::load_one($conn, 'id='.$artist->get_id()))==false) ;
             if (!$new && $artist->get_photo()==NULL) {
