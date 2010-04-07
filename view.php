@@ -257,6 +257,9 @@ function generate_artists($conn) {
         echo '</tr>';
     }
     echo '</tbody></table>';
+    ?>
+    <div class="comment">*dot. aukcji zagranicznej</div>
+    <?php
 }
 
 function generate_paintings($artist_id, $conn) {

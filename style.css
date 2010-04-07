@@ -245,3 +245,8 @@ display:block;
 .form-label {
 width: 30%;
 }
+
+.comment {
+margin-left: 250px;
+margin-top: 30px;
+}
