@@ -99,6 +99,11 @@ function Init(obj,width,height, val) {
     document.write("<img class=\"button\" src=\"bbeditor/images/code.gif\" name=\"btnCode\" onClick=\"doAddTags('[code]','[/code]')\">");
     document.write("<img class=\"button\" src=\"bbeditor/images/file.png\" name=\"btnFile\" onClick=\"showFileUploadForm()\">");
     document.write("<img class=\"button\" src=\"bbeditor/images/enter.png\" name=\"btnEnter\" onClick=\"doAddTags('[br]','')\">");
+	document.write("<img class=\"button\" src=\"bbeditor/images/left.png\" name=\"btnEnter\" onClick=\"doAddTags('[left]','[/left]')\">");
+	document.write("<img class=\"button\" src=\"bbeditor/images/right.png\" name=\"btnEnter\" onClick=\"doAddTags('[right]','[/right]')\">");
+	document.write("<img class=\"button\" src=\"bbeditor/images/arial.png\" name=\"btnEnter\" onClick=\"doAddTags('[font=arial]','[/font]')\">");
+	document.write("<img class=\"button\" src=\"bbeditor/images/cursive.png\" name=\"btnEnter\" onClick=\"doAddTags('[font=cursive]','[/font]')\">");
+	document.write("<img class=\"button\" src=\"bbeditor/images/verdana.png\" name=\"btnEnter\" onClick=\"doAddTags('[font=verdana]','[/font]')\">");
     document.write("<div id=\"loading\">");
     document.write("<img src=\"graphics/loading.gif\" />");
     document.write("</div>");

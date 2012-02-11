@@ -33,22 +33,35 @@ function open_HTML() {
     function print_HTML_head($action) {
         echo '<html xmlns="http://www.w3.org/1999/xhtml">';
         ?>
-<head profile="http://gmpg.org/xfn/11">
-    <title>Artgaleria.net</title>
+	<head profile="http://gmpg.org/xfn/11">
+    <title>JerzyBudziszewski.pl</title>
     <link rel="shortcut icon" href="graphics/favicon.ico" />
     <link rel="stylesheet" title="default" href="style.css" type="text/css" media="screen" />
     <script type="text/javascript" src="scripts/scripts.js" ></script>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="content-language" content="pl-pl" />
     <meta http-equiv="imagetoolbar" content="false" />
-    <meta name="author" content="Wojciech Terlikowski" />
+    <meta name="author" content="Piotr Prątnicki" />
     <meta name="classification" content="sztuka, art, galeria, gallery"/>
-    <meta name="description" content="Artgaleria.net - Odkrycia w sztuce. Prezentacja Galerii Sztuki."/>
-    <meta name="keywords" content="Artgaleria.net, sztuka, art, galeria, gallery, zaczeniuk, beksiński, biegas, ecole de paris, halicka, hayden, kierzkowski, mela muter, tarasewicz, tarasin, tatarczyk, terlikowski, pągowska, nowosielski, fangor, malarstwo polskie, malarstwo europejskie, antyki, obrazy, galeria, rzeźby, dziela sztuki, sprzedaz, sztuka współczesna,"/>
+    <meta name="description" content="JerzyBudziszewski.pl - Strona artysty."/>
+    <meta name="keywords" content="JerzyBudziszewski.net, sztuka, art, galeria, gallery, zaczeniuk, beksiński, biegas, ecole de paris, halicka, hayden, kierzkowski, mela muter, tarasewicz, tarasin, tatarczyk, terlikowski, pągowska, nowosielski, fangor, malarstwo polskie, malarstwo europejskie, antyki, obrazy, galeria, rzeźby, dziela sztuki, sprzedaz, sztuka współczesna,"/>
     <meta name="mssmarttagspreventparsing" content="true" />
     <meta name="robots" content="index, follow, noarchive" />
     <meta name="revisit-after" content="7 days" />
-    <?php
+	<?php
+	if ($action=='article'){
+	echo '
+	<script src="scripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="scripts/jquery.lazyload.js?v=3" type="text/javascript" charset="utf-8"></script>';
+	}
+	if ($action=='paintings'){
+	echo '<script src="scripts/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="scripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="scripts/jquery.lazyload.js?v=3" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="scripts/prettyPhoto.css" type="text/css" media="screen" charset="utf-8" />
+	<script src="scripts/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+';
+	}
     if ($action=='admin'){
 echo '   <script type="text/javascript" src="bbeditor/ed.js"></script>';
 echo '<script src="scripts/jquery.js" type="text/javascript"></script>';
@@ -72,12 +85,24 @@ function  print_container($action) {
 
 function print_header($action, $conn) {
     ?>
-
 <div id="header">
-    <div id="logo"><a href="http://www.artgaleria.net/index.php"><img src="logo.png" alt="Artgaleria.net"/></a></div>
-        <?php
-        print_navigation($action, $conn);
-        ?>
+    <div id="logo"><a href="index.php"><span class="logoGray">jerzy</span>budziszewski<span class="logoGray">.pl</span></a></div>
+	    <?php
+		if($action != 'admin' && $action != 'message')
+		{echo '
+	<div id="navigationImages">
+		<ul>
+		<li><img src="graphics/1.jpg" alt=""/></li>
+		<li ><img src="graphics/2.jpg" alt=""/></li>
+		<li ><img src="graphics/3.jpg" alt=""/></li>
+		<li ><img src="graphics/4.jpg" alt=""/></li>
+		<li ><img src="graphics/5.jpg" alt=""/></li>
+		<li class="last "><img src="graphics/6.jpg" alt=""/></li>
+		</ul>
+	</div>';
+	print_navigation($action, $conn);
+}
+     ?>
 </div>
     <?php
 }
@@ -85,45 +110,58 @@ function print_header($action, $conn) {
 function print_navigation($action, $conn) {
     echo '<div id="navigation">';
     echo '<ul>';
-    $menu_id = 1;
-    if ($action == 'admin') {
-        $menu_id = 0;
-    } elseif($action == 'article') {
+    $menu_id = 0;
+    if($action == 'paintings' || $action == 'techniques'){
+		$menu_id = 6;
+		}
+		elseif($action == 'article') {
         $article_id = get_int_parameter('article');
         switch ($article_id) {
             case 1:
-                $menu_id = 3;
+                $menu_id = 1;
                 break;
             case 2:
-                $menu_id = 4;
+                $menu_id = 2;
                 break;
             case 3:
-                $menu_id = 6;
+                $menu_id = 3;
                 break;
             case 4:
-                $menu_id = 7;
+                $menu_id = 4;
+                break;
+			case 5:
+                $menu_id = 5;
                 break;
         }
-    }
-    $menu_items = Menu::load($conn, 'level=0', 'id');
-    /* @var $item Menu */
-    for ($i = 0;     $i < count($menu_items);     $i++) {
-        $item = $menu_items[$i];
-        $link = generate_href($item->get_action());
-        $name = $item->get_description();
-        $active = "";
-        if ($i + 1 < count($menu_items)) {
-            if ($item->get_id() == $menu_id) {
-                $active = "class=\"active\"";
-            }
-            echo "<li $active><a $link>$name</a></li>";
-        } else {
-            if ($item->get_id() == $menu_id) {
-                $active = "active";
-            }
-            echo "<li class=\"last $active\"><a $link>$name</a></li>";
-        }
-    }
+    }		
+	elseif($action == NULL)
+		$menu_id = 6;
+	$active1 = "";
+	$active2 = "";
+	$active3 = "";
+	$active4 = "";
+	$active5 = "";
+	$active6 = "";
+			if($menu_id == '1')
+				$active1 = "class=\"active\"";
+			if($menu_id == '2')
+				$active2 = "class=\"active\"";
+			if($menu_id == '3')
+				$active3 = "class=\"active\"";
+			if($menu_id == '4')
+				$active4 = "class=\"active\"";
+			if($menu_id == '5')
+				$active5 = "class=\"last active\"";
+			else
+				$active5 = "class=\"last\"";
+			if($menu_id == '6')
+				$active6 = "class=\"active\"";
+			echo "<li $active6><a href=\"./index.php?action=techniques\">TWÓRCZOŚĆ</a></li>";
+			echo "<li $active1><a href=\"./index.php?action=article&article=1\">BIOGRAFIA</a></li>";
+			echo "<li $active2><a href=\"./index.php?action=article&article=2\">WYSTAWY</a></li>";
+			echo "<li $active3><a href=\"./index.php?action=article&article=3\">ARCHIWUM</a></li>";
+			echo "<li $active4><a href=\"./index.php?action=article&article=4\">O STRONIE</a></li>";
+			echo "<li $active5><a href=\"./index.php?action=article&article=5\">KONTAKT</a></li>";
     echo '</ul></div>';
 }
 
@@ -136,20 +174,12 @@ function print_content($action, $conn) {
 
 function generate_content($action, $conn) {
     switch ($action) {
-        case 'artists':
-            generate_artists($conn);
+        case 'techniques':
+            generate_techniques($conn);
             break;
         case 'paintings':
-            $artist_id = get_int_parameter('artist');
-            generate_paintings($artist_id, $conn);
-            break;
-        case 'biography':
-            $artist_id = get_int_parameter('artist');
-            generate_biography($artist_id, $conn);
-            break;
-        case 'form':
-            $painture_id = get_int_parameter('painting');
-            generate_form($painture_id, $conn);
+            $technique_id = get_int_parameter('technique');
+            generate_paintings($technique_id, $conn);
             break;
         case 'article':
             $article_id = get_int_parameter('article');
@@ -162,14 +192,6 @@ function generate_content($action, $conn) {
             }
             $object = get_string_parameter('object');
             admin_object($object, $conn);
-            break;
-        case 'report':
-            if ($_SESSION['name'] != 'admin') {
-                generate_login();
-                break;
-            }
-            $object = get_string_parameter('object');
-            report($object, $conn);
             break;
         case 'delete':
             if ($_SESSION['name'] != 'admin') {
@@ -185,16 +207,15 @@ function generate_content($action, $conn) {
             break;
 
         default:
-            generate_artists($conn);
+            generate_techniques($conn);
             break;
     }
 }
 
 function print_footer() {
-    echo '<div class="separator"></div>';
     echo '<div id="footer">';
     echo '<p>';
-    echo '00-515 Warszawa, ul. Żurawia 26, tel./fax 22 622 69 90, <a href="mailto:art@artgaleria.net">art@artgaleria.net</a> | Copyright &copy; Artgaleria.net 2010 ';
+    echo '00-515 Warszawa, ul. Żurawia 26, tel./fax 22 622 69 90, <a href="mailto:info@jerzybudziszewski.pl">info@jerzybudziszewski.pl</a> | Copyright &copy; JerzyBudziszewski.pl 2012 ';
     echo '</p>';
     echo '</div>';
 ?>
@@ -204,7 +225,7 @@ function print_footer() {
 document.writeln('<'+'scr'+'ipt type="text/javascript" src="http://home.hit.stat.pl/_'+(new Date()).getTime()+'/script.js?id=ciU7K88tHIiujYfuvCk4lrPo7zXKfBtOaeyYuMDxHSj.L7"></'+'scr'+'ipt>');
 //-->
 </script>
-<?
+<?php
 }
 
 function generate_login() {
@@ -231,136 +252,57 @@ function show_message() {
 
     $url = isset($_SESSION["last_url"])?$_SESSION["last_url"]:generate_link("index.php");
     $message = isset($_SESSION["message"])?$_SESSION["message"]:"";
-    echo "<span>$message <a href=\"$url\">powrót</a></span>";
+    echo "<div class='message'>$message <a href=\"$url\">powrót</a></div>";
 }
 
-function generate_artists($conn) {
-    echo '<table id="artists"><tbody>';
-    $artists = Artist::load($conn, 'active=1', 'surname');
-    $artists_column = ceil(count($artists) / 2);
-    for ($index = 0; $index < $artists_column; $index++) {
-        echo '<tr>';
-        /* @var $artist Artist */
-        $artist_left = $artists[$index];
-        $name_left = $artist_left->get_name() . " " . $artist_left->get_surname();
-        $link_left = generate_link("index.php?action=paintings&amp;artist=" . $artist_left->get_id() . "&amp;store=default");
-        echo '<td class="artist-empty"></td>';
-        echo "<td class=\"artist-first\"><a href=\"$link_left\">$name_left</a></td>";
-        if (($index + $artists_column) < count($artists)) {
-            $artist_right = $artists[$index + $artists_column];
-            $name_right = $artist_right->get_name() . " " . $artist_right->get_surname();
-            $link_right = generate_link("index.php?action=paintings&amp;artist=" . $artist_right->get_id() . "&amp;store=default");
-            echo "<td><a href=\"$link_right\">$name_right</a></td>";
-        } else {
-            echo "<td></td>";
-        }
-        echo '</tr>';
+function generate_techniques($conn) {
+    echo '<div id="sideNavigation"><ul>';
+    $techniques = Technique::load($conn, 'status=1', 'id');
+    for ($index = 0; $index < count($techniques); $index++) {
+        echo '<li>';
+        $technique = $techniques[$index];
+        $name = $technique->get_name();
+        $link = generate_link("index.php?action=paintings&amp;technique=" . $technique->get_id());
+        echo "<a href=\"$link\">$name</a>";
+        echo '</li>';
     }
-    echo '</tbody></table>';
-    ?>
-    <div class="comment">*dot. aukcji zagranicznej</div>
-    <?php
+    echo '</ul></div>';
 }
 
-function generate_paintings($artist_id, $conn) {
-    /* @var $artist Artist */
-    $artist = Artist::load_one($conn, "id=$artist_id");
-    echo "<p id=\"artist\"><span>" . $artist->get_name() . " " . $artist->get_surname() . "</span> ";
-    $link = generate_link("index.php?action=biography&amp;artist=$artist_id");
-    echo $artist->get_born() . " <a href=\"$link\">biografia</a></p>";
+function generate_paintings($technique_id, $conn) {
+    $technique = Technique::load_one($conn, "id=$technique_id");
+    echo "<p id=\"technique\"><span>" . $technique->get_name() . "</span><hr style=\"height:2px; background-color:black;\"/>";
+    $paintings = Painting::load($conn, "technique_id=$technique_id and status=1", "order_id, id desc");
+	if(Count($paintings)=='0')
+		echo "<h3>Brak obrazów</h3>";
 
-    $gallery = true;
-    $store = get_string_parameter('store');
-    switch ($store) {
-        case 'auction':
-            $paintings_new = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date>=curdate()", "auction_date");
-            $paintings_old = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date<curdate()", "auction_date desc");
-            $paintings = array_merge($paintings_new, $paintings_old);
-            $gallery = false;
-            break;
-        case 'default':
-
-            $paintings = Painting::load($conn, "artist_id=$artist_id and gallery=1", "paintings_order");
-            if (count($paintings) == 0) {
-                $paintings_new = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date>=curdate()", "auction_date");
-                $paintings_old = Painting::load($conn, "artist_id=$artist_id and gallery=0 and auction_date<curdate()", "auction_date desc");
-                $paintings = array_merge($paintings_new, $paintings_old);
-                $gallery = false;
-            }
-            break;
-        case 'gallery':
-        default:
-            $paintings = Painting::load($conn, "artist_id=$artist_id and gallery=1", "auction_date");
-            $gallery = true;
-    }
-
-    generate_subnavigation($artist_id, $gallery);
-    echo "<table><tbody>";
+    echo "<table class=\"align_left gallery clearfix\" id=\"infinite_scroll\"><tbody>";
     foreach ($paintings as $painting) {
         echo '<tr>';
-        $form_link = generate_link("index.php?action=form&amp;painting=" . $painting->get_id());
-        echo '<td class="narrow">';
+        echo '<td class="narrow align_top">';
         if ($painting->get_photo() != null) {
-            if ($painting->get_pdf_file() != null) {
-                $file_link = generate_link("files/" . $painting->get_pdf_file());
-            } else {
-                $file_link = false;
-            }
-            $image_link = generate_link("images/" . $painting->get_photo());
-            if ($file_link) {
-                echo "<a href=\"$file_link\">";
-            }
-            echo "<img src=\"$image_link\" alt=\"" . $painting->get_name() . "\" />";
-            if ($file_link) {
-                echo '</a>';
-            }
+            $thumbnail_link = generate_link("images/" . $painting->get_photo().'.jpeg');
+			$image_link = generate_link("images/" . $painting->get_photo().'big.jpeg');
+            echo "<a href=\"$image_link\" rel=\"prettyPhoto\" title=\"" .$painting->get_name(). "\"><img src=\"$thumbnail_link\" alt=\" \" /></a>";
         } else {
             $image_link = generate_link("graphics/art.png");
-            echo "<a href=\"$form_link\"><img src=\"$image_link\" alt=\"" . $painting->get_name() . "\" /></a>";
+            echo "<a href=\"\"><img src=\"$image_link\" alt=\"" . $painting->get_name() . "\" /></a>";
         }
-        echo '</td><td>';
-        echo "<h2>" . $painting->get_name() . "</h2>";
-        echo "<p> " . decode_BBCode($painting->get_info()) . "<br/> <a href=\"$form_link\">więcej</a> </p>";
-        if (!$gallery) {
-            echo "<p>Data aukcji: " . $painting->get_auction_date();
-            if (!is_null_or_empty($painting->get_estimated_price())) {
-                echo ", estymata " . $painting->get_estimated_price();
-            }
-            echo "</p>";
-
-            if ($painting->get_status() == 1) {
-                echo '<p>Sprzedany ';
-                if (!is_null_or_empty($painting->get_price())) {
-                    echo "za " . $painting->get_price();
-                }
-                echo '</p>';
-            }
-        }
+        echo '</td><td class="align_top">';
+        echo "<h1 class=\"paintingName\">" . $painting->get_name() . "</h1>";
+		echo "<p> </br>" . $painting->get_dimensions() . "</p>";
         echo '</td></tr>';
     }
     echo '</tbody></table>';
-}
-
-function generate_form($painting_id, $conn) {
-    $painting = Painting::load_one($conn, "id=$painting_id");
-    $artist = Artist::load_one($conn, "id=" . $painting->get_artist_id());
-
-    echo "<h1>" . $artist->get_name() . " " . $artist->get_surname() . " - " . $painting->get_name() . "</h1>";
-    echo "<p>Dziękujemy za zainteresowanie. Po podaniu adresu e-mail wyślemy zdjęcie lub uzupełniające dane o dziele.</p>";
-    /* @var $user Statistics */
-    $user = false;
-    if ($_SESSION['email'] != "") {
-        $user = Statistics::load_one($conn, "email='" . $_SESSION['email'] . "'");
-        if ($user) {
-            $user->set_price(null);
-            $user->set_notice(null);
-        }
-    }
-    if (!$user) {
-        $user = new Statistics(array());
-    }
-    $user->set_painting_id($painting_id);
-    $user->create_form(generate_link("save.php?object=user"), true);
+	echo '<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+          $("img").lazyload();
+  $("area[rel^=\'prettyPhoto\']").prettyPhoto();
+  $(".gallery:first a[rel^=\'prettyPhoto\']").prettyPhoto({animation_speed:\'normal\',theme:\'dark_square\',slideshow:3000, autoplay_slideshow: false,social_tools:\'\'});
+  
+});
+</script>
+';
 }
 
 function generate_article($article_id, $conn) {
@@ -369,39 +311,24 @@ function generate_article($article_id, $conn) {
     display_article($article->get_name(), $article->get_content());
 }
 
-function generate_biography($artist_id, $conn) {
-    /* @var $article Acticle */
-    $artist = Artist::load_one($conn, "id=$artist_id");
-    if ($artist->get_photo() != null) {
-        $artist_photo = generate_link('images/' . $artist->get_photo());
-        echo '<div class="biography-photo"> <img src="' . $artist_photo . '" alt="' . $artist->get_name() . ' ' . $artist->get_surname() . '"/></div>';
-    }
-    display_article($artist->get_name() . " " . $artist->get_surname(), $artist->get_bigraphy());
-}
-
 function display_article($title, $content) {
+
     echo "<h1>$title</h1>";
     echo "<div id=\"article_content\">" . decode_BBCode($content) . "</div>";
+	echo '  <script type="text/javascript" charset="utf-8">
+      $(function() {
+          $("img").lazyload();
+      });
+  </script>';
 }
 
-function generate_subnavigation($artist_id, $gallery) {
-    $gallery_link = generate_link("index.php?action=paintings&amp;artist=$artist_id&amp;store=gallery");
-    $action_link = generate_link("index.php?action=paintings&amp;artist=$artist_id&amp;store=auction");
-
-    echo '<div id="subnavigation"><ul>';
-    echo "<li><a href=\"$gallery_link\"" . ($gallery?'class="active"':'') . ">Galeria</a></li>";
-    echo "<li><a href=\"$action_link\"" . ($gallery?'':'class="active"') . ">Aukcje</a></li>";
-    echo '</ul>';
-    echo '</div>';
-}
-
-function generate_admin_subnavigation($artists) {
-    $gallery_link = generate_link("index.php?action=admin&amp;object=artists");
+function generate_admin_subnavigation($techniques) {
+    $gallery_link = generate_link("index.php?action=admin&amp;object=techniques");
     $action_link = generate_link("index.php?action=admin&amp;object=articles");
 
     echo '<div id="subnavigation"><ul>';
-    echo "<li><a href=\"$gallery_link\"" . ($artists?'class="active"':'') . ">Artyści</a></li>";
-    echo "<li><a href=\"$action_link\"" . ($artists?'':'class="active"') . ">Artykuły i raporty</a></li>";
+    echo "<li><a href=\"$gallery_link\"" . ($techniques?'class="active"':'') . ">Techniki i obrazy</a></li>";
+    echo "<li><a href=\"$action_link\"" . ($techniques?'':'class="active"') . ">Artykuły</a></li>";
     echo '</ul>';
     echo '</div>';
 }
@@ -412,22 +339,30 @@ function admin_object($object, $conn) {
             generate_admin_subnavigation(false);
             $article_id = get_int_parameter('id');
             $article = Article::load_one($conn, "id=$article_id");
-            echo "<h1>" . $article->get_name() . "</h1>";
+			if($article_id == 1)
+				echo "<h1> Biografia </h1>";
+			elseif($article_id == 4)
+				echo "<h1> O stronie </h1>";
+            else
+				echo "<h1>" . $article->get_name() . "</h1>";
             $article->create_form(generate_link("save.php?object=article"), true);
             break;
-        case 'artist':
+        case 'technique':
             generate_admin_subnavigation(true);
-            $artist_id = get_int_parameter('id');
-            $artist = null;
-            $new = ($artist_id == NULL || ($artist = Artist::load_one($conn, "id=$artist_id")) === false);
+            $technique_id = get_int_parameter('id');
+            $technique = null;
+            $new = ($technique_id == NULL || ($technique = Technique::load_one($conn, "id=$technique_id")) === false);
             if ($new) {
-                $artist = new Artist(array());
+                $technique = new Technique(array());
             }
-            echo "<h1>" . $artist->get_name() . " " . $artist->get_surname() . "</h1>";
-            $artist->create_form(generate_link("save.php?object=artist"), true);
+            echo "<h1>" . $technique->get_name() . "</h1>";
+			$defaultVisible = false;
+			if($technique_id == null)
+				$defaultVisible = true;
+            $technique->create_form(generate_link("save.php?object=technique"), true, $conn, $defaultVisible);
             if (!$new) {
                 echo '<h1>Obrazy</h1>';
-                list_paintings($conn, $artist_id, true, true, true);
+                list_paintings($conn, $technique_id, true, true);
             }
             break;
         case 'painting':
@@ -436,65 +371,40 @@ function admin_object($object, $conn) {
             $new = ($painting_id == NULL || ($painting = Painting::load_one($conn, "id=$painting_id")) == false);
             if ($new) {
                 $painting = new Painting(array());
-                $artist_id = get_int_parameter('artist_id');
-                $painting->set_artist_id($artist_id);
+                $technique_id = get_int_parameter('technique_id');
+                $painting->set_technique_id($technique_id);
             }
             echo "<h1>" . $painting->get_name() . "</h1>";
-            $painting->create_form(generate_link("save.php?object=painting"), true);
+			$defaultVisible = false;
+			if($painting_id == null)
+				$defaultVisible = true;
+            $painting->create_form(generate_link("save.php?object=painting"), true,$conn, $defaultVisible);
             break;
         case 'articles':
             generate_admin_subnavigation(false);
             echo "<h1>Artykuły</h1>";
             $articles = Article::load($conn);
             list_articles($articles, false, false);
-            echo '<h1>Raporty</h1>';
-            $report_link = generate_link("index.php?action=admin&amp;object=visitors");
-            echo '<p><a href="' . $report_link . '">Raporty użytkowników</a></p>';
             break;
-        case 'artists':
+        case 'techniques':
             generate_admin_subnavigation(true);
-            list_artists($conn, true, true);
-            break;
-        case 'visitors':
-            generate_admin_subnavigation(false);
-            echo "<h1>Odwiedzający</h1>";
-            $visitors = Statistics::load($conn);
-            list_visitors($visitors, false, false);
+            list_techniques($conn, true, true);
             break;
         default:
             generate_admin_subnavigation(true);
-            list_artists($conn, true, true);
+            list_techniques($conn, true, true);
     }
 }
 
-function list_paintings($conn, $artist_id, $delete, $create, $report) {
+function list_paintings($conn, $technique_id, $delete, $create) {
     $table_id = "table-sortable";
     make_table_sortable($table_id);
-    $paintings_gallery = Painting::load($conn, "artist_id=$artist_id and gallery=1", 'paintings_order');
-    $paintings_auction = Painting::load($conn, "artist_id=$artist_id and gallery=0");
-
-    echo "<table id=\"$table_id\"><tbody>";
+    $paintings_gallery = Painting::load($conn, "technique_id=$technique_id", 'order_id');
+    echo "<table id=\"$table_id\" class='table'><tbody>";
     if ($create) {
-        $create_link = generate_link("index.php?action=admin&amp;object=painting&amp;artist_id=$artist_id");
+        $create_link = generate_link("index.php?action=admin&amp;object=painting&amp;technique_id=$technique_id");
         echo "<tr class=\"nodrop nodrag\"><td><a href=\"$create_link\"><strong> Utwórz nowy</strong> </a></td></tr>";
     }
-    echo "<tr class=\"nodrop nodrag\"><td><strong> Obrazy na aukcjach</strong> </td></tr>";
-    foreach ($paintings_auction as $object) {
-        echo '<tr class="nodrop nodrag" id="' . $object->get_id() . '"><td>';
-        $edit_link = generate_link("index.php?action=admin&amp;object=painting&amp;id=" . $object->get_id());
-        echo "<a href=\"$edit_link\">" . $object->get_name() . "</a>";
-        if ($delete) {
-            $edit_link = generate_link("index.php?action=delete&amp;object=painting&amp;id=" . $object->get_id());
-            echo "</td><td><a href=\"$edit_link\"> usuń </a>";
-        }
-        if ($report) {
-            $report_link = generate_link("index.php?action=report&amp;object=painting&amp;id=" . $object->get_id());
-            echo "</td><td><a href=\"$report_link\"> raport </a>";
-        }
-        echo '</td></tr>';
-
-    }
-    echo "<tr class=\"nodrop nodrag\"><td><strong> Obrazy w galerii</strong> </td></tr>";
     foreach ($paintings_gallery as $object) {
         echo '<tr id="' . $object->get_id() . '"><td>';
         $edit_link = generate_link("index.php?action=admin&amp;object=painting&amp;id=" . $object->get_id());
@@ -502,10 +412,6 @@ function list_paintings($conn, $artist_id, $delete, $create, $report) {
         if ($delete) {
             $edit_link = generate_link("index.php?action=delete&amp;object=painting&amp;id=" . $object->get_id());
             echo "</td><td><a href=\"$edit_link\"> usuń </a>";
-        }
-        if ($report) {
-            $report_link = generate_link("index.php?action=report&amp;object=painting&amp;id=" . $object->get_id());
-            echo "</td><td><a href=\"$report_link\"> raport </a>";
         }
         echo '</td></tr>';
 
@@ -526,56 +432,44 @@ function make_table_sortable($table_id) { ?>
 }
 
 function list_articles($articles, $delete, $create) {
-    echo '<table><tbody>';
-    if ($create) {
-        $create_link = generate_link("index.php?action=admin&amp;object=article");
-        echo "<tr><td><a href=\"$create_link\"> Utwórz nowy </a></td></tr>";
-    }
-    foreach ($articles as $object) {
-        echo '<tr><td>';
-        $edit_link = generate_link("index.php?action=admin&amp;object=article&amp;id=" . $object->get_id());
-        echo "<a href=\"$edit_link\">" . $object->get_name() . "</a>";
-        if ($delete) {
-            $edit_link = generate_link("index.php?action=delete&amp;object=article&amp;id=" . $object->get_id());
-            echo "<a href=\"$edit_link\"> usuń </a>";
-        }
-        echo '</td></tr>';
-
-    }
+    echo '<table class="table"><tbody>';
+	echo '
+	<tr><td>
+        <a href="index.php?action=admin&amp;object=article&amp;id=1">Biografia</a>
+	</td></tr>
+	<tr><td>
+        <a href="index.php?action=admin&amp;object=article&amp;id=2">Wystawy</a>
+	</td></tr>
+	<tr><td>
+        <a href="index.php?action=admin&amp;object=article&amp;id=3">Archiwum</a>
+	</td></tr>
+	<tr><td>
+        <a href="index.php?action=admin&amp;object=article&amp;id=4">O stronie</a>
+	</td></tr>
+	<tr><td>
+        <a href="index.php?action=admin&amp;object=article&amp;id=5">Kontakt</a>
+	</td></tr>	
+		';
     echo '</tbody></table>';
 }
 
-function list_visitors($visitors) {
-    echo '<table><tbody>';
-    foreach ($visitors as $object) {
-        echo '<tr><td>';
-        $vcard_link = generate_link("vcard.php?id=" . $object->get_id());
-        echo "<a href=\"$vcard_link\">" . $object->get_name() . "</a></td><td>";
-        $report_link = generate_link("index.php?action=report&amp;object=visitor&amp;id=" . $object->get_id());
-        echo "<a href=\"$report_link\"> raport </a>";
-        echo '</td></tr>';
-    }
-    echo '</tbody></table>';
-}
-
-function list_artists($conn, $delete, $create) {
-    echo "<h1>Artyści</h1>";
-    echo '<table><tbody>';
+function list_techniques($conn, $delete, $create) {
+    echo "<h1>Techniki</h1>";
+    echo '<table class="table"><tbody>';
     if ($create) {
-        $create_link = generate_link("index.php?action=admin&amp;object=artist");
-        echo "<tr><td> <a href=\"$create_link\"> Utwórz Nowy </a> </td></tr>";
+        $create_link = generate_link("index.php?action=admin&amp;object=technique");
+        echo "<tr><td> <a href=\"$create_link\"> Utwórz nową </a> </td></tr>";
     }
-    $artists = Artist::load($conn, '1', 'surname');
+    $techniques = Technique::load($conn, '1', 'name');
     echo '<tr>';
-    for ($index = 0; $index < count($artists); $index++) {
-        /* @var $artist Artist */
-        $artist = $artists[$index];
-        $name = $artist->get_name() . " " . $artist->get_surname();
-        $link = generate_link("index.php?action=admin&amp;object=artist&amp;id=" . $artist->get_id());
+    for ($index = 0; $index < count($techniques); $index++) {
+        $technique = $techniques[$index];
+        $name = $technique->get_name();
+        $link = generate_link("index.php?action=admin&amp;object=technique&amp;id=" . $technique->get_id());
         echo "<td>";
         echo "<a href=\"$link\">$name</a>";
         if ($delete) {
-            $delete_link = generate_link("index.php?action=delete&amp;object=artist&amp;id=" . $artist->get_id());
+            $delete_link = generate_link("index.php?action=delete&amp;object=technique&amp;id=" . $technique->get_id());
             echo "</td><td> <a href=\"$delete_link\"> usuń </a>  ";
         }
         echo "</td>";
@@ -589,53 +483,27 @@ function list_artists($conn, $delete, $create) {
 
 function delete_object($object, $id, $conn) {
     switch ($object) {
-        case 'artist':
-            $artist = Artist::load_one($conn, "id=$id");
-            unlink("images/" . $artist->get_photo());
-            $paintings_list = Painting::load($conn, "artist_id=$id");
+        case 'technique':
+            $technique = Technique::load_one($conn, "id=$id");
+            $paintings_list = Painting::load($conn, "technique_id=$id");
             foreach ($paintings_list as $painting) {
                 delete_painting($painting, $conn);
             }
-            Artist::delete($conn, "id=$id");
-            generate_message('Wpis został usunięty', $_SERVER['HTTP_REFERER'], 0);
+            Technique::delete($conn, "id=$id");
+            generate_message('Technika zostałą usunięta', $_SERVER['HTTP_REFERER'], 0);
             break;
         case 'painting':
             $painting = Painting::load_one($conn, "id=$id");
             delete_painting($painting, $conn);
-            generate_message('Wpis został usunięty', $_SERVER['HTTP_REFERER'], 0);
+            generate_message('Obraz został usunięty', $_SERVER['HTTP_REFERER'], 0);
             break;
     }
 }
 
 function delete_painting($painting, $conn) {
-    unlink("images/" . $painting->get_photo());
-    unlink("files/" . $painting->get_pdf_file());
+    unlink("images/" . $painting->get_photo().'.jpeg');
+    unlink("images/" . $painting->get_photo().'big.jpeg');
     Painting::delete($conn, "id=" . $painting->get_id());
-}
-
-function report($object, $conn) {
-    generate_admin_subnavigation(false);
-    $id = get_int_parameter('id');
-    switch ($object) {
-        case 'visitor':
-            $rows = load_db_rows('user_painting up join Painting p on up.painting_id=p.id join Artist a on p.artist_id=a.id join Statistics s on up.user_id=s.id', 'concat_ws(\' \',a.name , a.surname) as name, p.name as title, up.count as sum, s.name as head', $conn, "up.user_id=$id", 'sum desc');
-            echo '<h1>' . $rows[0]['head'] . '</h1>';
-            echo '<table><tbody>';
-            echo '<thead><th> Artysta </th><th> Tytuł obrazu </th><th>Zainteresowanie</th></thead>';
-            break;
-        case 'painting':
-            $rows = load_db_rows('user_painting up join Statistics s on up.user_id=s.id join Painting p on up.painting_id=p.id join Artist a on p.artist_id=a.id', 's.name as name, s.email as title, up.count as sum, concat_ws(\' \',a.name , a.surname, p.name) as head', $conn, "up.painting_id=$id", 'sum desc');
-            echo '<h1>' . $rows[0]['head'] . '</h1>';
-            echo '<table><tbody>';
-            echo '<thead><th> Nazwisko </th><th> email </th><th> Zainteresowanie</th></thead>';
-            break;
-        default:
-            return;
-    }
-    foreach ($rows as $row) {
-        echo '<tr><td> ' . $row['name'] . '</td><td>' . $row['title'] . '</td><td>' . $row['sum'] . '</td></tr>';
-    }
-    echo '</tbody></table>';
 }
 
 ?>

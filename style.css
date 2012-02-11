@@ -17,60 +17,110 @@ a:hover {
 
 /* body */
 body {
-    background:#838383;
+    background:#bfbfbf;
     color:#000;
-    font:1em Calibri, Arial, Helvetica, "bitstream vera sans", sans-serif;
+    font:1em Times New Roman, Verdana, Calibri, Arial, Helvetica, "bitstream vera sans", sans-serif;
 }
 
 /* header */
 #header {
-    height:95px;
+    height:220px;
     margin:0 auto 36px;
-    width:755px;
-    background-image: url(logo.jpeg);
+    width:902px;
 }
 #logo {
-    width:174px;
-    height:46px;
+	text-align:center;
 }
 
+#logo :hover {
+text-decoration:none;
+}
+
+.logoGray{
+	color:#7F7F7F;
+}
+
+.message{
+margin-top:-150px;
+margin-left:350px;
+}
+
+.arial{
+font-family:arial;
+}
+
+.verdana{
+font-family:verdana;
+}
+
+.cursive{
+font-family:cursive;
+}
+
+#logo a{
+color:#000000;
+font-size:4em;
+}
 /* navigation */
 #navigation {
     margin:0 auto;
-    height:22px;
-    list-style:none;
-    padding-top:27px;
-    width:755px;
+    height:42px;
+    padding-top:10px;
 }
 #navigation li {
     float:left;
     list-style:none;
     text-transform:uppercase;
-    font-size: 0.8em;
-    height: 22px;
-    background-image: url(graphics/off.png);
-    margin-right:7px;
-    width:120px;
+    font-size: 1.1em;
+    height: 42px;
+    background-image: url(graphics/button.png);
+    margin-right:10px;
+    width:142px;
 }
 
 #navigation .last {
     margin-right:0;
 }
 #navigation a {
-    color:#fff;
+    color:#000;
     display:block;
-    line-height:22px;
+    line-height:42px;
     text-align:center;
     text-decoration: none;
 }
 #navigation .active {
-    background-image: url(graphics/on.png);
+	background-image: url(graphics/button.png);
     font-weight:bolder;
+}
+
+#navigationImages {
+    margin:0 auto;
+    height:90px;
+    padding-top:27px;
+}
+
+#navigationImages li {
+    float:left;
+	list-style:none;
+    margin-right:10px;
+    width:142px;
+}
+
+#navigationImages .last {
+    margin-right:0;
+}
+
+#navigationImages img{
+	margin-left:3px;
+	vertical-align:bottom;
+	height:88px;
+	width:136px;
 }
 
 /* subnavigation */
 #subnavigation {
-    background:#fff;
+	margin-top:-150px;
+    background:#cfcfcf;
     border-top: 1px solid #000;
     height:30px;
     list-style:none;
@@ -80,7 +130,7 @@ body {
 #subnavigation li {
     font-size: 0.8em;
     float:left;
-    width:345px;
+    width:450px;
     list-style:none;
     text-transform: uppercase;
 }
@@ -96,13 +146,38 @@ body {
     font-size: large;
 }
 
+/* side navigation */
+#sideNavigation {
+	margin-top:20px;
+	float:left;
+}
 
+#sideNavigation li {
+	list-style:disc inside url(graphics/arrow.png);
+}
+
+#sideNavigation a {
+	line-height: 40px;
+	vertical-align: top;
+    color:#000;
+	font-weight:bolder;
+}
 /* page content */
+
+#page_content .paintingName{
+	margin-top:-27px
+}
+
+#page_content hr {
+	margin-top:15px;
+	margin-bottom:30px;
+}
+
 #page_content {
     height:auto;
     margin:0 auto;
     padding:0 0 20px;
-    width:755px;
+    width:900px;
 }
 #page_content h1 {
     font-size:1.8em;
@@ -115,9 +190,24 @@ body {
     font-size: 16px;
 }
 
+#page_content h3{
+	text-align:center;
+    font-weight: normal;
+    font-size: 22px;
+}
+
 #page_content table{
     padding: 0 20px;
     width: 100%;
+}
+
+.table a{
+	color:#333333;
+}
+
+#page_content .align_left{
+	padding: 0;
+	margin-left: -2px;
 }
 
 #page_content input, textarea {
@@ -127,7 +217,7 @@ body {
 }
 
 #page_content .narrow {
-    width: 200px;
+    width: 270px;
     padding-bottom: 20px;
 }
 
@@ -140,8 +230,7 @@ body {
 
 #page_content img{
     /* Add container height here if desired */
-    background-color: white;
-    border: 1px solid gray;
+    background-color: black;
     padding: 6px;
     position: relative;
 }
@@ -150,7 +239,14 @@ body {
     color:#ff0011;
 }
 
-#artist span {
+#page_content .button {
+    border: 2px solid;
+	border-color:#333333;
+    margin: 1px;
+    padding: 0px;
+}
+
+#technique span {
     font-size:1.8em;
 }
 
@@ -160,7 +256,7 @@ body {
     margin: 20px auto 0;
     text-align:center;
     font-size: 0.8em;
-    color: #838383;
+    color: #000000;
 }
 
 #footer a{
@@ -177,8 +273,8 @@ body {
 
 #wrap {
     margin:20px auto;
-    width: 870px;
-    background:#ffffff;
+    width: 1000px;
+    background:#bfbfbf;
 }
 
 #top{
@@ -191,11 +287,10 @@ body {
     clear:both;
 }
 
-.button {
-    border: 1px solid #ccc;
-    margin: 1px;
-    padding: 2px;
+.align_top{
+vertical-align:top;
 }
+
 .biography-photo {
     float: left;
     margin-top: 10px;
@@ -209,7 +304,7 @@ body {
     width: 241px;
 }
 .separator {
-    width: 755px;
+    width: 955px;
     height: 5px;
     background-image: url(graphics/belka.jpeg);
     margin:30px auto 0;
@@ -249,4 +344,30 @@ width: 30%;
 .comment {
 margin-left: 506px;
 margin-top: 30px;
+}
+
+#infinite_scroll{
+height:200px;overflow-y:scroll;margin-top:50px;border:0px solid #ccc;padding:10px;
+}
+
+#infinite_scroll a{
+font-weight:bold;
+}
+
+#infinite_scroll p{
+margin-bottom:20px;width:90%
+}
+
+.loading{
+text-align:right;margin-top:-100px;
+}
+
+.left{
+float:left;
+margin: 15px;
+}
+
+.right{
+float:right;
+margin: 15px;
 }

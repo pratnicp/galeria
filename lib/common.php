@@ -33,9 +33,12 @@ function decode_BBCode($string) {
             '@\[(?i)u\](.*?)\[/(?i)u\]@si',
             '@\[(?i)img\](.*?)\[/(?i)img\]@si',
             '@\[(?i)url=(.*?)\](.*?)\[/(?i)url\]@si',
+			'@\[(?i)font=(.*?)\](.*?)\[/(?i)font\]@si',
             '@\[(?i)code\](.*?)\[/(?i)code\]@si',
             '@\[(?i)url\](.*?)\[/(?i)url\]@si',
             '@\[(?i)quote\](.*?)\[/(?i)quote\]@si',
+			'@\[(?i)left\](.*?)\[/(?i)left\]@si',
+			'@\[(?i)right\](.*?)\[/(?i)right\]@si',
             '@\[(?i)br\]@si',
             '/\n/'
     );
@@ -43,11 +46,14 @@ function decode_BBCode($string) {
             '<b>\\1</b>',
             '<i>\\1</i>',
             '<u>\\1</u>',
-            '<img src="\\1" alt="\\1" />',
+            '<img class="lazy" src="graphics/empty.gif" data-original="\\1" alt="\\1" />',
             '<a href="\\1">\\2</a>',
+			'<p class="\\1">\\2</p>',
             '<code>\\1</code>',
             '<a href="\\1" target="new">\\1</a>',
             '<p class="quote">\\1</p>',
+            '<div class="left">\\1</div>',
+			'<div class="right">\\1</div>',
             '<div class="clear">\\1</div>',
             '<br/>'
     );
