@@ -88,7 +88,7 @@ function print_header($action, $conn) {
 <div id="header">
     <div id="logo"><a href="index.php"><span class="logoGray">jerzy</span>budziszewski<span class="logoGray">.pl</span></a></div>
 	    <?php
-		if($action != 'admin' && $action != 'message')
+		if($action != 'admin' && $action != 'message' && $action != 'delete')
 		{echo '
 	<div id="navigationImages">
 		<ul>
@@ -157,11 +157,11 @@ function print_navigation($action, $conn) {
 			if($menu_id == '6')
 				$active6 = "class=\"active\"";
 			echo "<li $active6><a href=\"./index.php?action=techniques\">TWÓRCZOŚĆ</a></li>";
-			echo "<li $active1><a href=\"./index.php?action=article&article=1\">BIOGRAFIA</a></li>";
-			echo "<li $active2><a href=\"./index.php?action=article&article=2\">WYSTAWY</a></li>";
-			echo "<li $active3><a href=\"./index.php?action=article&article=3\">ARCHIWUM</a></li>";
-			echo "<li $active4><a href=\"./index.php?action=article&article=4\">O STRONIE</a></li>";
-			echo "<li $active5><a href=\"./index.php?action=article&article=5\">KONTAKT</a></li>";
+			echo "<li $active1><a href=\"./index.php?action=article&amp;article=1\">BIOGRAFIA</a></li>";
+			echo "<li $active2><a href=\"./index.php?action=article&amp;article=2\">WYSTAWY</a></li>";
+			echo "<li $active3><a href=\"./index.php?action=article&amp;article=3\">ARCHIWUM</a></li>";
+			echo "<li $active4><a href=\"./index.php?action=article&amp;article=4\">O STRONIE</a></li>";
+			echo "<li $active5><a href=\"./index.php?action=article&amp;article=5\">KONTAKT</a></li>";
     echo '</ul></div>';
 }
 
@@ -271,7 +271,7 @@ function generate_techniques($conn) {
 
 function generate_paintings($technique_id, $conn) {
     $technique = Technique::load_one($conn, "id=$technique_id");
-    echo "<p id=\"technique\"><span>" . $technique->get_name() . "</span><hr style=\"height:2px; background-color:black;\"/>";
+    echo "<p id=\"technique\"><span>" . $technique->get_name() . "</span></p><hr style=\"height:2px; background-color:black;\"/>";
     $paintings = Painting::load($conn, "technique_id=$technique_id and status=1", "order_id, id desc");
 	if(Count($paintings)=='0')
 		echo "<h3>Brak obrazów</h3>";
@@ -290,7 +290,7 @@ function generate_paintings($technique_id, $conn) {
         }
         echo '</td><td class="align_top">';
         echo "<h1 class=\"paintingName\">" . $painting->get_name() . "</h1>";
-		echo "<p> </br>" . $painting->get_dimensions() . "</p>";
+		echo "<p> <br/>" . $painting->get_dimensions() . "</p>";
         echo '</td></tr>';
     }
     echo '</tbody></table>';
